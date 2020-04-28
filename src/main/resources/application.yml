@@ -1,0 +1,34 @@
+server:
+  port: 9001
+  compression:
+    enabled: false
+spring:
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: false
+  application:
+    name: toolbox.spring.oauth2-authotization-server
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/security?useSSL=false
+    username: root
+    password: r00t123!+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      test-while-idle: true
+      validation-query: SELECT 1
+    initialization-mode: never
+    platform: mysql
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        show_sql: true
+    hibernate:
+      naming:
+        physical-strategy: toolbox.hibernate.naming.UpperCasePhysicalNamingStrategy
+
+check-user-scopes: true
+
+
