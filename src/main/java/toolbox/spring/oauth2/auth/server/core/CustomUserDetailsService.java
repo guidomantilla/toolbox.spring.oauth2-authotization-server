@@ -1,4 +1,4 @@
-package toolbox.spring.oauth2.auth.server.security.oauth2;
+package toolbox.spring.oauth2.auth.server.core;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
