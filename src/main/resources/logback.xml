@@ -29,7 +29,7 @@
     <logger name="org.springframework.security.web.access" level="DEBUG"/>
     <logger name="org.springframework.web" level="WARN"/>
 
-    <logger name="toolbox.oauth2.model" level="DEBUG"/>
+    <logger name="toolbox.spring.oauth2.auth.server" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
