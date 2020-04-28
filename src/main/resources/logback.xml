@@ -25,8 +25,8 @@
     <logger name="org.springframework.orm" level="WARN"/>
     <logger name="org.springframework.transaction" level="WARN"/>
     <logger name="org.springframework.ui" level="WARN"/>
-    <logger name="org.springframework.security" level="DEBUG"/>
-    <logger name="org.springframework.security.oauth2" level="DEBUG"/>
+    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.springframework.security.web.access" level="DEBUG"/>
     <logger name="org.springframework.web" level="WARN"/>
 
     <logger name="toolbox.oauth2.model" level="DEBUG"/>
