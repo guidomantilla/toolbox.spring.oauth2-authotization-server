@@ -1,7 +1,6 @@
 package toolbox.spring.oauth2.auth.server;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,28 +24,27 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Value("${check-user-scopes}")
     private Boolean checkUserScopes;
 
-    @Autowired
     private DataSource dataSource;
-
-    @Autowired
     private UserDetailsService userDetailsService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private TokenStore tokenStore;
-
-    @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired
     private OAuth2RequestFactory oAuth2RequestFactory;
-
-    @Autowired
-    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    public OAuth2ServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
+                              JwtAccessTokenConverter jwtAccessTokenConverter, TokenStore tokenStore,
+                              OAuth2RequestFactory oAuth2RequestFactory, PasswordEncoder passwordEncoder,
+                              DataSource dataSource) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+        this.tokenStore = tokenStore;
+        this.oAuth2RequestFactory = oAuth2RequestFactory;
+        this.passwordEncoder = passwordEncoder;
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -54,8 +52,8 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
     @Override

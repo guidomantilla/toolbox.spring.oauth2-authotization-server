@@ -1,7 +1,6 @@
 package toolbox.spring.oauth2.auth.server;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -24,29 +23,23 @@ import javax.sql.DataSource;
 @Configuration
 public class OAuth2BeanConfig {
 
+    private final DataSource dataSource;
+    private final ClientDetailsService clientDetailsService;
+
+    @Autowired
+    public OAuth2BeanConfig(ClientDetailsService clientDetailsService, DataSource dataSource) {
+        this.clientDetailsService = clientDetailsService;
+        this.dataSource = dataSource;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Autowired
     @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
+    public UserDetailsService userDetailsService() {
         return new JdbcUserDetailsManager(dataSource);
-    }
-
-    @Autowired
-    @Bean
-    public OAuth2RequestFactory oAuth2RequestFactory(ClientDetailsService clientDetailsService) {
-        DefaultOAuth2RequestFactory requestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
-        requestFactory.setCheckUserScopes(true);
-        return requestFactory;
-    }
-
-    @Autowired
-    @Bean
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
-        return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
     @Bean
@@ -56,9 +49,22 @@ public class OAuth2BeanConfig {
         return converter;
     }
 
-    @Autowired
     @Bean
-    public TokenEndpointAuthenticationFilter tokenEndpointAuthenticationFilter(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, OAuth2RequestFactory requestFactory) {
+    @Autowired
+    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
+        return new JwtTokenStore(jwtAccessTokenConverter);
+    }
+
+    @Bean
+    public OAuth2RequestFactory oAuth2RequestFactory() {
+        DefaultOAuth2RequestFactory requestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
+        requestFactory.setCheckUserScopes(true);
+        return requestFactory;
+    }
+
+    @Bean
+    @Autowired
+    public TokenEndpointAuthenticationFilter tokenEndpointAuthenticationFilter(AuthenticationManager authenticationManager, OAuth2RequestFactory requestFactory) {
         return new TokenEndpointAuthenticationFilter(authenticationManager, requestFactory);
     }
 }
