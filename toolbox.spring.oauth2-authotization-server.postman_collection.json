@@ -12,13 +12,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "password",
-							"value": "USER_CLIENT_APP-123+",
+							"key": "username",
+							"value": "USER_CLIENT_APP",
 							"type": "string"
 						},
 						{
-							"key": "username",
-							"value": "USER_CLIENT_APP",
+							"key": "password",
+							"value": "USER_CLIENT_APP-123+",
 							"type": "string"
 						}
 					]
@@ -55,6 +55,97 @@
 					"path": [
 						"oauth",
 						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/oauth/token_key",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "USER_CLIENT_APP",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "USER_CLIENT_APP-123+",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:9001/oauth/token_key",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"oauth",
+						"token_key"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/oauth/check_token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:9001/oauth/check_token/?token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTg4MjIxMzczLCJhdXRob3JpdGllcyI6WyJyb2xlX3VzZXIiXSwianRpIjoiNDUwM2ZiYTgtZTY2NC00ZDhiLTlkYjQtODhkNDVmODI4YTMyIiwiY2xpZW50X2lkIjoiVVNFUl9DTElFTlRfQVBQIn0.ChHZwVeinqaOymKJC4R2Aq9j4EoH9JHQPu1MHB8V317rXxwDKKHsP0Mtc51mvNuzsZkXzJyDkN8hTF8bng98uiTv-EhMiAwNHBeCt7dtDBkya6eYxk4s59GEbrCIqb6O3O30cbineXx00syeij4qGABeNnnr0nZPoRfmusm7zDuJVN9nKrYdS-D_v3ub7jjzBMMJKg8PRFepKGh4ZiJ4Ju0ZN2UvykfyHr7jphSnnL2yL0lEQa2oA2cnsdEbqT1bvObMtpV3DMpISrMlHNpzLiVj7nP1RbZcdEIl3XMhMu9vzZ8JX0a6irMVjCAsmGazWOpGh_BnkJtu_XC2DZ383w",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"oauth",
+						"check_token",
+						""
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiVVNFUl9DTElFTlRfUkVTT1VSQ0UiLCJVU0VSX0FETUlOX1JFU09VUkNFIl0sInVzZXJfbmFtZSI6InVzZXIiLCJzY29wZSI6WyJyb2xlX3VzZXIiXSwiZXhwIjoxNTg4MjIxMzczLCJhdXRob3JpdGllcyI6WyJyb2xlX3VzZXIiXSwianRpIjoiNDUwM2ZiYTgtZTY2NC00ZDhiLTlkYjQtODhkNDVmODI4YTMyIiwiY2xpZW50X2lkIjoiVVNFUl9DTElFTlRfQVBQIn0.ChHZwVeinqaOymKJC4R2Aq9j4EoH9JHQPu1MHB8V317rXxwDKKHsP0Mtc51mvNuzsZkXzJyDkN8hTF8bng98uiTv-EhMiAwNHBeCt7dtDBkya6eYxk4s59GEbrCIqb6O3O30cbineXx00syeij4qGABeNnnr0nZPoRfmusm7zDuJVN9nKrYdS-D_v3ub7jjzBMMJKg8PRFepKGh4ZiJ4Ju0ZN2UvykfyHr7jphSnnL2yL0lEQa2oA2cnsdEbqT1bvObMtpV3DMpISrMlHNpzLiVj7nP1RbZcdEIl3XMhMu9vzZ8JX0a6irMVjCAsmGazWOpGh_BnkJtu_XC2DZ383w"
+						}
 					]
 				}
 			},
