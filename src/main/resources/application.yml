@@ -1,11 +1,19 @@
 server:
-  port: 9001
+  port: 8443
   compression:
     enabled: false
+  ssl:
+    enabled: true
+    protocol: TLS
+    key-store: classpath:ssl.p12
+    key-store-password: Raven123qweasd+
+    key-store-type: PKCS12
+    key-alias: ssl
 spring:
   main:
     banner-mode: off
     allow-bean-definition-overriding: false
+    register-shutdown-hook: true
   application:
     name: toolbox.spring.oauth2-authotization-server
   profiles:
@@ -15,12 +23,13 @@ spring:
     username: root
     password: r00t123!+
     driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: never
+    platform: mysql
     tomcat:
       test-while-idle: true
       validation-query: SELECT 1
-    initialization-mode: never
-    platform: mysql
   jpa:
+    open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
