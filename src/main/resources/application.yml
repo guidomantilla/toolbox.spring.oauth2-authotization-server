@@ -17,11 +17,11 @@ spring:
   application:
     name: toolbox.spring.oauth2-authotization-server
   profiles:
-    active: local
+    active: ${OAUTH2_AUTH_ENVIRONMENT:dev}
   datasource:
-    url: jdbc:mysql://localhost:3306/spring-security?useSSL=false
-    username: root
-    password: r00t123!+
+    url: ${OAUTH2_AUTH_DATASOURCE_URL:jdbc:mysql://localhost:3306/spring-security?useSSL=false}
+    username: ${OAUTH2_AUTH_DATASOURCE_USERNAME:root}
+    password: ${OAUTH2_AUTH_DATASOURCE_PASSWORD:r00t123!+}
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
     platform: mysql
