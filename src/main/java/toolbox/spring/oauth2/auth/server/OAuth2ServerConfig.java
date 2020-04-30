@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import toolbox.spring.oauth2.jdbc.uppercase.JdbcUpperCaseClientDetailsServiceBuilder;
 
 import javax.sql.DataSource;
 
@@ -30,10 +29,10 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private DataSource dataSource;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private TokenStore tokenStore;
@@ -44,12 +43,6 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private OAuth2RequestFactory oAuth2RequestFactory;
 
-    /*
-     * Requerido SOLO porque la BD del ejemplo esta en mayusculas. Spring OAUTH2 solo soporta schemas en minusculas.
-     */
-    @Autowired
-    private JdbcUpperCaseClientDetailsServiceBuilder jdbcUpperCaseClientDetailsServiceBuilder;
-
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -57,12 +50,6 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        /*
-         * Requerido SOLO porque la BD del ejemplo esta en mayusculas. Spring OAUTH2 solo soporta schemas en minusculas.
-         */
-        clients.setBuilder(jdbcUpperCaseClientDetailsServiceBuilder);
-
-        //
         clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
     }
 

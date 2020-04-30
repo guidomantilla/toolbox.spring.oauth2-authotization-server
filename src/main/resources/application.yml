@@ -11,7 +11,7 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:mysql://localhost:3306/security?useSSL=false
+    url: jdbc:mysql://localhost:3306/spring-security?useSSL=false
     username: root
     password: r00t123!+
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +27,7 @@ spring:
         show_sql: false
     hibernate:
       naming:
-        physical-strategy: toolbox.hibernate.naming.UpperCasePhysicalNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 check-user-scopes: true
 

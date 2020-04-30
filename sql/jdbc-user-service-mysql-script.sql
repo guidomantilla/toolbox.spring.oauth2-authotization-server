@@ -1,21 +1,22 @@
 create table users
 (
-    principal   varchar(50) not null primary key,
-    credentials varchar(50) not null
+    username varchar(50)  not null primary key,
+    password varchar(500) not null,
+    enabled  boolean      not null
 );
 
-create table roles
+create table authorities
 (
-    principal varchar(50) not null,
-    role      varchar(50) not null,
-    constraint fk_roles_users foreign key (principal) references users (principal)
+    username  varchar(50) not null,
+    authority varchar(50) not null,
+    constraint fk_authorities_users foreign key (username) references users (username)
 );
 
-create unique index ix_auth_principal on roles (principal, role);
+create unique index ix_auth_username on authorities (username, authority);
 
 create table `groups`
 (
-    id         bigint primary key auto_increment,
+    id         bigint auto_increment primary key,
     group_name varchar(50) not null
 );
 
@@ -28,23 +29,8 @@ create table group_authorities
 
 create table group_members
 (
-    id       bigint primary key auto_increment,
+    id       bigint auto_increment primary key,
     username varchar(50) not null,
     group_id bigint      not null,
     constraint fk_group_members_group foreign key (group_id) references `groups` (id)
 );
-
-insert into users
-values ('user', '{noop}password');
-
-insert into roles
-values ('user', 'USER');
-
-insert into `groups`
-values (1, 'OPERATIONS');
-
-insert into group_authorities
-values (1, 'DBA');
-
-insert into group_members
-values (1, 'user', 1);

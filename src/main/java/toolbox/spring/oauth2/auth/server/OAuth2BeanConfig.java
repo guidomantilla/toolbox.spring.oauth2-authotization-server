@@ -6,18 +6,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
+import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-import toolbox.spring.oauth2.auth.server.core.CustomOauth2RequestFactory;
-import toolbox.spring.oauth2.auth.server.core.CustomTokenEnhancer;
-import toolbox.spring.oauth2.jdbc.uppercase.JdbcUpperCaseClientDetailsServiceBuilder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -29,18 +29,16 @@ public class OAuth2BeanConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    /*
-     * Requerido SOLO porque la BD del ejemplo esta en mayusculas. Spring OAUTH2 solo soporta schemas en minusculas.
-     */
+    @Autowired
     @Bean
-    public JdbcUpperCaseClientDetailsServiceBuilder jdbcUpperCaseClientDetailsServiceBuilder(DataSource dataSource) throws Exception {
-        return new JdbcUpperCaseClientDetailsServiceBuilder();
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Autowired
     @Bean
     public OAuth2RequestFactory oAuth2RequestFactory(ClientDetailsService clientDetailsService) {
-        CustomOauth2RequestFactory requestFactory = new CustomOauth2RequestFactory(clientDetailsService);
+        DefaultOAuth2RequestFactory requestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
         requestFactory.setCheckUserScopes(true);
         return requestFactory;
     }
@@ -53,7 +51,7 @@ public class OAuth2BeanConfig {
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new CustomTokenEnhancer();
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "Raven123qweasd+".toCharArray()).getKeyPair("jwt"));
         return converter;
     }
