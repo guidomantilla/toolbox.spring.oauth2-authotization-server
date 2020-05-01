@@ -8,7 +8,7 @@ ENV OAUTH2_AUTH_DATASOURCE_URL='jdbc:mysql://dev-mysql:3306/spring-security?useS
 
 VOLUME /tmp
 
-ARG JAR_FILE=build/libs/toolbox.spring.oauth2-authotization-server-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=build/libs/toolbox.spring.oauth2-authotization-server.jar
 
 ADD ${JAR_FILE} app.jar
 
