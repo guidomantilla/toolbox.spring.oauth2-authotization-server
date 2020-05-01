@@ -1,6 +1,4 @@
 PARENT_NAME=$1
-WORKSPACE=$HOME/Workspace
-
 if [ -z "$PARENT_NAME" ]; then
     APP_NAME=toolbox.spring.oauth2-authotization-server
 else
@@ -14,8 +12,3 @@ gradle clean build \
 && docker container run --detach --restart always \
                         --publish 8443:8443 --link dev-mysql:dev-mysql \
                         --name "$APP_NAME" "$APP_NAME"
-
-#if [ $? = 0 -a $MUST_RETURN = true ]; then
-#   cd $HOME/Workspace
-#fi
-
